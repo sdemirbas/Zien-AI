@@ -7,7 +7,7 @@
 	.then(function (todos) {
     var data = [];
 		todos.forEach((todo) => {
-			data.push(todo.id); //Başlıkları console' a yazdırma
+			data.push(todo.title); //Başlıkları console' a yazdırma
 		});
 	});
 
