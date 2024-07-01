@@ -8,60 +8,22 @@
   <!-- plugins:css -->
   <link rel="stylesheet" href="assets/vendors/mdi/css/materialdesignicons.min.css">
   <link rel="stylesheet" href="assets/vendors/css/vendor.bundle.base.css">
-  <!-- endinject -->
-  <!-- Plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <!-- endinject -->
-  <!-- Layout styles -->
   <link rel="stylesheet" href="assets/css/style.css">
   <!-- End layout styles -->
   <link rel="shortcut icon" href="assets/images/ZIENminik.png" />
   <script src="index.js"></script>
-  <script src="messaging.js"></script>
-
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-analytics.js"></script>
-  <script type="module">
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-import { getMessaging, getToken, onMessage } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-messaging.js";
+  <!-- Firebase App is always required and must be first -->
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-app.js"></script>
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyAbIQp5kFKi_FKEVnHwk8XF_rfZnOpTFdE",
-  authDomain: "zienai.firebaseapp.com",
-  projectId: "zienai",
-  storageBucket: "zienai.appspot.com",
-  messagingSenderId: "627801203003",
-  appId: "1:627801203003:web:1c13a094239e3d4072571e",
-  measurementId: "G-WNBQD6HQD2"
-};
-
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
-// Initialize Firebase Messaging and get a reference to the service
-const messaging = getMessaging(app);
-
-// Request permission to send notifications
-getToken(messaging, { vapidKey: 'BNaJYRqqLYUHdwXdD-s8J1xRuwlu6gzrVDKGpOcqN0I878huH93gIkRoyuEo9KjagpnPL40sm9NxbvBvcvAbVws' }).then((currentToken) => {
-  if (currentToken) {
-    console.log('Current token for client: ', currentToken);
-    // Send the token to your server and update the UI if necessary
-    // ...
-  } else {
-    console.log('No registration token available. Request permission to generate one.');
-    // Show permission request UI
-    // ...
-  }
-}).catch((err) => {
-  console.log('An error occurred while retrieving token. ', err);
-  // Handle error
-  // ...
-});
-
-</script>
+<!-- Add additional services that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-database.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-messaging.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.3.0/firebase-functions.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-messaging.js"></script>
   </head>
   <body>
     <div class="container-scroller">
@@ -419,6 +381,57 @@ getToken(messaging, { vapidKey: 'BNaJYRqqLYUHdwXdD-s8J1xRuwlu6gzrVDKGpOcqN0I878h
     </div>
     <!-- container-scroller -->
     <!-- plugins:js -->
+    <script>
+      // Firebase yapılandırma bilgilerini buraya ekleyin
+      const firebaseConfig = {
+          apiKey: "AIzaSyAbIQp5kFKi_FKEVnHwk8XF_rfZnOpTFdE",
+          authDomain: "zienai.firebaseapp.com",
+          projectId: "zienai",
+          storageBucket: "zienai.appspot.com",
+          messagingSenderId: "627801203003",
+          appId: "1:627801203003:web:1c13a094239e3d4072571e",
+          measurementId: "G-WNBQD6HQD2"
+      };
+    
+      // Firebase'i başlat
+      firebase.initializeApp(firebaseConfig);
+    
+      const messaging = firebase.messaging();
+    
+      // İzin iste ve token al
+      Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+              console.log('Notification permission granted.');
+              messaging.getToken({ applicationServerKey: 'BBkYapx2hNa7Amv_DbWE6V57BxINuo6lrkRn2-fWbZ1TzT5WrcwMfKahWQLhqsQTbwUwyanze6RFd65CK9UtXUI' }).then((currentToken) => {
+                  if (currentToken) {
+                      console.log('Current token for client: ', currentToken);
+    
+                      // Token'ı kullan (örneğin konsola yazdır)
+                      // Burada token'ı başka bir yere göndermek veya kaydetmek için kullanabilirsin
+    
+                  } else {
+                      console.log('No registration token available. Request permission to generate one.');
+                  }
+              }).catch((err) => {
+                  console.error(err);
+              });
+          } else {
+              console.log('Unable to get permission to notify.');
+          }
+      });
+    
+      if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('./firebase-messaging-sw.js')
+              .then((registration) => {
+                  console.log('Service worker registered:', registration);
+              })
+              .catch((error) => {
+                  console.error('Error registering service worker:', error);
+              });
+    
+      }
+    
+    </script>
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>
     <!-- endinject -->
     <!-- Plugin js for this page -->
@@ -434,5 +447,6 @@ getToken(messaging, { vapidKey: 'BNaJYRqqLYUHdwXdD-s8J1xRuwlu6gzrVDKGpOcqN0I878h
     <script src="assets/js/dashboard.js"></script>
     <script src="assets/js/todolist.js"></script>
     <!-- End custom js for this page -->
+
   </body>
 </html>
