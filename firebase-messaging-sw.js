@@ -24,3 +24,18 @@ messaging.setBackgroundMessageHandler(function(payload) {
 
     return self.registration.showNotification(notificationTitle, notificationOptions);
 });
+
+// Bildirime tıklanıldığında
+self.addEventListener('notificationclick', function(event) {
+  console.log('[firebase-messaging-sw.js] Notification click Received.');
+
+  event.notification.close();
+
+  // Bildirim verilerini al
+  const data = event.notification.data;
+  
+  // Popup penceresini aç
+  event.waitUntil(
+    clients.openWindow('/notification-details?title=' + data.title + '&body=' + data.body)
+  );
+});

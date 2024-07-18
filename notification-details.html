@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Notification Details</title>
+</head>
+<body>
+  <h1>Notification Details</h1>
+  <p id="title"></p>
+  <p id="body"></p>
+
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const title = urlParams.get('title');
+    const body = urlParams.get('body');
+
+    document.getElementById('title').textContent = 'Title: ' + title;
+    document.getElementById('body').textContent = 'Body: ' + body;
+  </script>
+</body>
+</html>
