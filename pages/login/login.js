@@ -35,23 +35,6 @@ loginForm.addEventListener("submit", async (e) => {
     localStorage.setItem("userId", userID); 
     window.location.href = "../../index.html";
 
-    // Firebase Firestore veritabanına belge ekleme işlemi
-    // try {
-    //   const uid = user.uid; // Kimlik doğrulaması yapılmış kullanıcının UID'sini al
-    //   const docRef = await addDoc(collection(db, "companies"), {
-    //     companyCode: "1009",
-    //     userUid: uid // Kullanıcı UID'sini belgeye ekle
-    //   });
-    //   console.log("Belge başarıyla yazıldı, ID: ", docRef.id);
-
-    //   // const q = query(collection(db, "companies"), where("companyCode", "==", "1005"));
-    //   //   const querySnapshot = await getDocs(q);
-    //   //   querySnapshot.forEach((doc) => {
-    //   //     console.log(`${doc.id} => ${doc.data().companyCode}`);
-    //   //   });
-    // } catch (e) {
-    //   console.error("Bilgi Alınamadı ", e);
-    // }
   } catch (error) {
     // errorMessage.innerText = `Kullanıcı Bilgileri Yanlış!`;
     const statusErrorsModal = new bootstrap.Modal(document.getElementById('statusErrorsModal'));
