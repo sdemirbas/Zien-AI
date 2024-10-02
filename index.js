@@ -28,16 +28,13 @@ if (userId) {
   //   console.error("Veri Alınamadı ", e);
   // }
 } else {
-  window.location.href = "pages/samples/login.html";
-}
-
-function logout() {
-  // localStorage'daki userID'yi temizle
-  localStorage.removeItem('userId');
-
-  // Login sayfasına yönlendir
   window.location.href = "pages/login/login.html";
 }
+
+window.logout = function() {
+  localStorage.removeItem('userId');
+  window.location.href = "pages/login/login.html";
+};
 
 // const apiUrl = `https://us-central1-zienai.cloudfunctions.net/app/user`;
 // let loginUSer;
