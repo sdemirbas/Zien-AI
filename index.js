@@ -1,6 +1,6 @@
 import { getFirestore, collection, getDocs, addDoc, query, where } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-firestore.js";
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.0.0/firebase-app.js";
-
+import { getAuth} from "https://www.gstatic.com/firebasejs/9.0.0/firebase-auth.js";
 const firebaseConfig = {
   apiKey: "AIzaSyC9YvUI6EDGTcULTRAxiRmE3id1h6aezAQ",
   authDomain: "zientech-161c4.firebaseapp.com",
@@ -11,22 +11,25 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const user = auth.currentUser;
 const db = getFirestore(app);
 const userId = localStorage.getItem("userId");
 
 if (userId) {
   console.log("Giriş yapan kullanıcının UID'si:", userId);
 
-  // try {
-  //   const q = query(collection(db, "companies"), where("companyCode", "==", "1005"));
-  //   const querySnapshot = await getDocs(q);
+  try {
+    const q = query(collection(db, "companies"));
+    const querySnapshot = await getDocs(q);
 
-  //   querySnapshot.forEach((doc) => {
-  //     console.log(`${doc.id} => ${doc.data().companyCode}`);
-  //   });
-  // } catch (e) {
-  //   console.error("Veri Alınamadı ", e);
-  // }
+    querySnapshot.forEach((doc) => {
+      // console.log(`${doc.id} => ${doc.data().companyCode}`);
+      console.log(doc.data());
+    });
+  } catch (e) {
+    console.error("Veri Alınamadı ", e);
+  }
 } else {
   window.location.href = "pages/login/login.html";
 }

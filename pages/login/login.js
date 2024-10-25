@@ -15,6 +15,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
 const loginForm = document.getElementById("login-form");
 const modal = document.getElementById("statusErrorsModal");
 
@@ -29,10 +30,6 @@ loginForm.addEventListener("submit", async (e) => {
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     
     // Giriş başarılı
-    const user = userCredential.user,
-          userID = user.uid;
-    console.log("Giriş başarılı:", userID);
-    localStorage.setItem("userId", userID); 
     window.location.href = "../../index.html";
 
   } catch (error) {
